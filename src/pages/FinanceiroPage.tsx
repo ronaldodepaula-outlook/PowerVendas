@@ -7,8 +7,6 @@ import {
   receberConta,
   pagarConta,
   getFluxo,
-  type Venda,
-  type Relatorio,
   type Fluxo,
 } from '../services/financeiro.service';
 
@@ -20,8 +18,6 @@ interface ErrorResponse {
 type TabType = 'dashboard' | 'receber' | 'pagar' | 'fluxo';
 
 const FinanceiroPage = () => {
-  const [vendas, setVendas] = useState<Venda[]>([]);
-  const [relatorio, setRelatorio] = useState<Relatorio | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [contasReceber, setContasReceber] = useState<any[]>([]);
@@ -42,13 +38,7 @@ const FinanceiroPage = () => {
           getFluxo(),
         ]);
 
-        const [rVendas, rRel, rContasR, rContasP, rFluxo] = results;
-
-        if (rVendas.status === 'fulfilled') setVendas(rVendas.value);
-        else console.warn('Vendas failed:', rVendas);
-
-        if (rRel.status === 'fulfilled') setRelatorio(rRel.value);
-        else console.warn('Relatorio failed:', rRel);
+        const [, , rContasR, rContasP, rFluxo] = results;
 
         if (rContasR.status === 'fulfilled') setContasReceber(rContasR.value || []);
         else console.warn('Contas receber failed:', rContasR);
@@ -67,19 +57,6 @@ const FinanceiroPage = () => {
     };
     load();
   }, []);
-
-  const getStatusColor = (status: string) => {
-    switch (status) {
-      case 'pago':
-        return 'text-green-600 font-semibold';
-      case 'pendente':
-        return 'text-yellow-600 font-semibold';
-      case 'cancelado':
-        return 'text-red-600 font-semibold';
-      default:
-        return '';
-    }
-  };
 
   // Cálculos para o dashboard
   const totalReceber = contasReceber.reduce((sum, c) => sum + Number(c.valor), 0);

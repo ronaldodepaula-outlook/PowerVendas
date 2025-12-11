@@ -1,0 +1,933 @@
+{
+	"info": {
+		"_postman_id": "f51bc97b-1f40-47f3-842e-e3bfa9a56fc7",
+		"name": "SaaS Plataforma Completa — EMPRESA",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "6365451",
+		"_collection_link": "https://interstellar-equinox-557729.postman.co/workspace/Team-Workspace~503af8f1-afb0-4897-8456-169a9bfcb896/collection/6365451-f51bc97b-1f40-47f3-842e-e3bfa9a56fc7?action=share&source=collection_link&creator=6365451"
+	},
+	"item": [
+		{
+			"name": "Auth Empresa",
+			"item": [
+				{
+					"name": "Login Empresa",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"joao@bateriasfortaleza.com\",\n  \"senha\": \"123456\"\n }"
+						},
+						"url": {
+							"raw": "{{base_url}}/auth/login",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						},
+						"description": "Login de um usuário vinculado a uma empresa específica."
+					},
+					"response": []
+				},
+				{
+					"name": "Logout Empresa",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{empresa_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/auth/logout",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"auth",
+								"logout"
+							]
+						},
+						"description": "Finaliza a sessão do usuário da empresa (invalida o token)."
+					},
+					"response": []
+				},
+				{
+					"name": "Quem Sou Eu (me)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{empresa_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/auth/me",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"auth",
+								"me"
+							]
+						},
+						"description": "Retorna os dados do usuário atualmente autenticado."
+					},
+					"response": []
+				},
+				{
+					"name": "Alterar Senha Usuário Empresa",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{empresa_token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"senha_atual\": \"123456\",\n  \"nova_senha\": \"654321\",\n  \"nova_senha_confirmation\": \"654321\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/auth/alterar-senha",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"auth",
+								"alterar-senha"
+							]
+						},
+						"description": "Altera a senha do usuário logado na empresa."
+					},
+					"response": []
+				},
+				{
+					"name": "Criar Usuário Interno",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{empresa_token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"nome\": \"Novo Colaborador\",\n  \"email\": \"colaborador@empresa.com\",\n  \"telefone\": \"85988887777\",\n  \"perfil\": \"vendedor\",\n  \"senha\": \"123456\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/auth/usuarios",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"auth",
+								"usuarios"
+							]
+						},
+						"description": "Cria um novo usuário interno na empresa (somente owner/admin)."
+					},
+					"response": []
+				},
+				{
+					"name": "Registra Empresa + Usuário",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"empresa\": {\n    \"nome_fantasia\": \"Baterias Fortaleza\",\n    \"razao_social\": \"Baterias Fortaleza LTDA\",\n    \"cnpj\": \"00.000.000/0000-00\",\n    \"email\": \"contato@bateriasfortaleza.com\",\n    \"telefone\": \"85988880000\",\n    \"cep\": \"60123456\",\n    \"endereco\": \"Rua das Flores\",\n    \"numero\": \"120\",\n    \"cidade\": \"Fortaleza\",\n    \"estado\": \"CE\"\n  },\n  \"usuario\": {\n    \"nome\": \"João Administrador\",\n    \"email\": \"joao@bateriasfortaleza.com\",\n    \"senha\": \"123456\",\n    \"senha_confirmation\": \"123456\"\n  }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/auth/register-empresa",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"auth",
+								"register-empresa"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Autenticação e gestão de usuários internos da empresa cliente"
+		},
+		{
+			"name": "Clientes",
+			"item": [
+				{
+					"name": "Listar Clientes",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{empresa_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/clientes",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"clientes"
+							]
+						},
+						"description": "Retorna todos os clientes cadastrados da empresa autenticada."
+					},
+					"response": []
+				},
+				{
+					"name": "Criar Cliente",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{empresa_token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"nome\": \"João da Silva\",\n  \"telefone\": \"85999998888\",\n  \"cpf\": \"000.000.000-00\",\n  \"endereco\": \"Rua A, 123\",\n  \"cidade\": \"Fortaleza\",\n  \"estado\": \"CE\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/clientes",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"clientes"
+							]
+						},
+						"description": "Cadastra um novo cliente."
+					},
+					"response": []
+				},
+				{
+					"name": "Visualizar Cliente",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{empresa_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/clientes/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"clientes",
+								"1"
+							]
+						},
+						"description": "Mostra dados detalhados de um cliente."
+					},
+					"response": []
+				},
+				{
+					"name": "Atualizar Cliente",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{empresa_token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"telefone\": \"85988887777\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/clientes/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"clientes",
+								"1"
+							]
+						},
+						"description": "Atualiza dados de um cliente específico."
+					},
+					"response": []
+				},
+				{
+					"name": "Excluir Cliente",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{empresa_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/clientes/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"clientes",
+								"1"
+							]
+						},
+						"description": "Remove um cliente (se permitido pela regra de negócio)."
+					},
+					"response": []
+				}
+			],
+			"description": "CRUD de clientes finais atendidos pela empresa"
+		},
+		{
+			"name": "Veículos",
+			"item": [
+				{
+					"name": "Listar Veículos",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{empresa_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/veiculos",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"veiculos"
+							]
+						},
+						"description": "Lista todos os veículos cadastrados na empresa."
+					},
+					"response": []
+				},
+				{
+					"name": "Criar Veículo",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{empresa_token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"id_cliente\": 1,\n  \"placa\": \"ABC1D23\",\n  \"modelo\": \"Fiat Uno\",\n  \"ano\": 2012,\n  \"cor\": \"Prata\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/veiculos",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"veiculos"
+							]
+						},
+						"description": "Cadastra um veículo para um cliente."
+					},
+					"response": []
+				},
+				{
+					"name": "Visualizar Veículo",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{empresa_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/veiculos/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"veiculos",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Atualizar Veículo",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{empresa_token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"cor\": \"Preto\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/veiculos/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"veiculos",
+								"1"
+							]
+						},
+						"description": "Atualiza dados do veículo."
+					},
+					"response": []
+				},
+				{
+					"name": "Excluir Veículo",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{empresa_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/veiculos/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"veiculos",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Cadastro de veículos vinculados aos clientes"
+		},
+		{
+			"name": "Baterias",
+			"item": [
+				{
+					"name": "Listar Baterias",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{empresa_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/baterias",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"baterias"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cadastrar Bateria",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{empresa_token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"codigo\": \"B60\",\n  \"modelo\": \"Moura 60Ah\",\n  \"amperagem\": 60,\n  \"garantia_meses\": 18,\n  \"preco_venda\": 480.0,\n  \"preco_custo\": 300.0,\n  \"id_categoria\": 1,\n  \"id_grupo\": 1,\n  \"id_subgrupo\": 1\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/baterias",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"baterias"
+							]
+						},
+						"description": "Cadastra uma nova bateria no portfólio da empresa."
+					},
+					"response": []
+				},
+				{
+					"name": "Visualizar Bateria",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{empresa_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/baterias/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"baterias",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Atualizar Bateria",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{empresa_token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"preco_venda\": 499.9\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/baterias/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"baterias",
+								"1"
+							]
+						},
+						"description": "Atualiza informações da bateria, como preço de venda."
+					},
+					"response": []
+				},
+				{
+					"name": "Excluir Bateria",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{empresa_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/baterias/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"baterias",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Cadastro de produtos (baterias) vendidos"
+		},
+		{
+			"name": "Estoque",
+			"item": [
+				{
+					"name": "Estoque Atual",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{empresa_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/estoque",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"estoque"
+							]
+						},
+						"description": "Lista quantidades em estoque por bateria."
+					},
+					"response": []
+				},
+				{
+					"name": "Movimentar Estoque",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{empresa_token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"id_bateria\": 1,\n  \"tipo\": \"entrada\",\n  \"origem\": \"ajuste\",\n  \"quantidade\": 5,\n  \"valor_unitario\": 300.0,\n  \"observacao\": \"Ajuste inicial de estoque\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/estoque/movimentar",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"estoque",
+								"movimentar"
+							]
+						},
+						"description": "Registra uma movimentação manual de estoque (entrada ou saída)."
+					},
+					"response": []
+				}
+			],
+			"description": "Consulta e movimentação de estoque"
+		},
+		{
+			"name": "Atendimentos / Vendas",
+			"item": [
+				{
+					"name": "Listar Atendimentos",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{empresa_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/atendimentos",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"atendimentos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Criar Atendimento (Venda)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{empresa_token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"id_cliente\": 1,\n  \"id_veiculo\": 1,\n  \"data_atendimento\": \"2025-02-10 15:30:00\",\n  \"observacoes\": \"Troca de bateria no local\",\n  \"itens\": [\n    {\n      \"id_bateria\": 1,\n      \"quantidade\": 1,\n      \"valor_unitario\": 480.0\n    }\n  ]\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/atendimentos",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"atendimentos"
+							]
+						},
+						"description": "Cria um atendimento com itens de bateria vendidos; triggers cuidam de estoque e financeiro."
+					},
+					"response": []
+				},
+				{
+					"name": "Visualizar Atendimento",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{empresa_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/atendimentos/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"atendimentos",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Ordem de serviço e vendas de baterias"
+		},
+		{
+			"name": "Financeiro Empresa",
+			"item": [
+				{
+					"name": "Contas a Receber",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{empresa_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/financeiro/contas/receber",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"financeiro",
+								"contas",
+								"receber"
+							]
+						},
+						"description": "Lista as contas a receber da empresa; pode ser filtrado por status com query string."
+					},
+					"response": []
+				},
+				{
+					"name": "Baixar Conta a Receber",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{empresa_token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"data_recebimento\": \"2025-02-10\",\n  \"id_finalizadora\": 1\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/financeiro/contas/receber/1/receber",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"financeiro",
+								"contas",
+								"receber",
+								"1",
+								"receber"
+							]
+						},
+						"description": "Marca uma conta a receber como recebida (trigger lança entrada no fluxo de caixa)."
+					},
+					"response": []
+				},
+				{
+					"name": "Contas a Pagar",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{empresa_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/financeiro/contas/pagar",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"financeiro",
+								"contas",
+								"pagar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Pagar Conta",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{empresa_token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"data_pagamento\": \"2025-02-10\",\n  \"id_finalizadora\": 2\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/financeiro/contas/pagar/1/pagar",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"financeiro",
+								"contas",
+								"pagar",
+								"1",
+								"pagar"
+							]
+						},
+						"description": "Marca uma conta a pagar como paga (trigger lança saída no fluxo de caixa)."
+					},
+					"response": []
+				},
+				{
+					"name": "Fluxo de Caixa",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{empresa_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/financeiro/fluxo",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"financeiro",
+								"fluxo"
+							]
+						},
+						"description": "Retorna o fluxo de caixa (entradas/saídas) da empresa. Pode receber filtros via query."
+					},
+					"response": []
+				}
+			],
+			"description": "Gestão de contas a pagar/receber e fluxo de caixa"
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:8000/api"
+		},
+		{
+			"key": "empresa_token",
+			"value": ""
+		}
+	]
+}

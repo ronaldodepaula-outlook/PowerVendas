@@ -1,6 +1,6 @@
 # PowerVendas Gestão — Aplicação SaaS
 
-Descrição clara
+Descrição
 ----------------
 Aplicação web para gestão de vendas e estoque de baterias, com módulos de clientes, veículos, atendimentos, estoque, movimentações e financeiro. Permite gerenciamento multi-empresa, registro de atendimentos, controle de garantias e relatórios básicos.
 
@@ -47,10 +47,6 @@ Build para produção
 npm run build
 npm run preview
 ```
-
-Prints / GIF
-------------
-- (Adicione capturas de tela e GIFs aqui mostrando a lista de clientes, tela de atendimentos, cartão de garantias e fluxo de movimentações.)
 
 Melhorias futuras
 ------------------
